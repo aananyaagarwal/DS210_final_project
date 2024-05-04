@@ -26,28 +26,7 @@ impl SocialNetwork {
     pub fn connect_nodes(&mut self, from: usize, to: usize) {
         self.adjacency_list.entry(from).or_insert_with(Vec::new).push(to);
     }
-
-    // Loads a social network from a text file where each line contains two integers representing an edge
-    pub fn load_from(file_path: &str) -> std::io::Result<Self> {
-        let file = File::open(file_path)?;
-        let reader = BufReader::new(file);
-        let mut network = SocialNetwork::new();
-        for line in reader.lines() {
-            let line = line?;
-            let nodes: Vec<&str> = line.split_whitespace().collect();
-            if nodes.len() == 2 {
-                let source = nodes[0].parse::<usize>().unwrap();
-                let destination = nodes[1].parse::<usize>().unwrap();
-                // Ensures both source and destination nodes are added to the network
-                network.add_node(source);
-                network.add_node(destination);
-                // Connects the source to the destination
-                network.connect_nodes(source, destination);
-            }
-        }
-        Ok(network)
-    }
-
+    
     // Computes the shortest path lengths from a starting node to all other reachable nodes using BFS
     pub fn bfs_path_lengths(&self, start: usize) -> HashMap<usize, usize> {
         let mut distances = HashMap::new();
@@ -76,5 +55,25 @@ impl SocialNetwork {
         }
 
         distances
+    }
+    // Loads a social network from a text file where each line contains two integers representing an edge
+    pub fn load_from(file_path: &str) -> std::io::Result<Self> {
+        let file = File::open(file_path)?;
+        let reader = BufReader::new(file);
+        let mut network = SocialNetwork::new();
+        for line in reader.lines() {
+            let line = line?;
+            let nodes: Vec<&str> = line.split_whitespace().collect();
+            if nodes.len() == 2 {
+                let source = nodes[0].parse::<usize>().unwrap();
+                let destination = nodes[1].parse::<usize>().unwrap();
+                // Ensures both source and destination nodes are added to the network
+                network.add_node(source);
+                network.add_node(destination);
+                // Connects the source to the destination
+                network.connect_nodes(source, destination);
+            }
+        }
+        Ok(network)
     }
 }
