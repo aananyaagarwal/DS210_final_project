@@ -1,4 +1,4 @@
-# DS210_final_project: Facebook Network Analysis with Rust
+#Facebook Network Analysis with Rust
 
 ## Project Overview
 This project is designed to analyze social network interactions within Facebook using Rust, focusing on computing Jaccard similarity metrics to identify user connectivity and community structures. The analysis aims to uncover influential nodes and possible clusters within the vast Facebook user base.
